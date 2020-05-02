@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+   {% if user.is_authenticated %}
+   <h2>Hello, {{user.username}}</h2>
+   <a href="{% url 'logout' %}">Log Out</a>
+   <h1></h1>
+   <form action="" method="post" >
+       {% csrf_token %}
+       <input type="text" name="place" placeholder="Enter place">
+       <input type="submit">
+   </form>
+   {% else %}
+   <h1>Invalid Authorization!!</h1>
+   <a href="{% url 'login' %}">Login</a>
+   <a href="{% url 'register' %}">Register</a>
+   {% endif %}
+
+<div>
+ {% for store,rating in store_names.items %}
+    {{ store }}
+    {{ rating }}
+    <br>
+    {% endfor %}
+</div>
+</body>
+</html>
