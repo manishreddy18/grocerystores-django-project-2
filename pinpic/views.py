@@ -53,8 +53,12 @@ def search(request):
             url = api + place
             req = requests.get(url).json()
             store_names = {}
+
             for i in range(len(req["results"])):
-                store_names[req["results"][i]["name"]]= req["results"][i]["rating"]
+                total = req["results"][i]["user_ratings_total"]
+                store_names[req["results"][i]["name"]] = req["results"][i]["rating"]
+
+            store_names = sorted(store_names.items(), key=lambda x: x[1], reverse=True)
             return render(request, 'pinpic/searchbox.html', {'store_names': store_names})
     else:
         return render(request, 'pinpic/searchbox.html')
