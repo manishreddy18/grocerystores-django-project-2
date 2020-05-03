@@ -41,7 +41,7 @@ def login(request):
             auth.login(request, user)
             return redirect('search')
         else:
-            messages.info(request, 'Invalid Credentials')
+            messages.info(request, 'Invalid Credentials!!!')
             return redirect('login')
     else:
         return render(request, 'pinpic/login.html')

@@ -1,31 +1,42 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Search</title>
 </head>
 <body>
    {% if user.is_authenticated %}
+   <div class="name">
    <h2>Hello, {{user.username}}</h2>
+   </div>
+   <div class = logout-bt>
    <a href="{% url 'logout' %}">Log Out</a>
-   <h1></h1>
+       </div>
    <form action="" method="post" >
        {% csrf_token %}
-       <input type="text" name="place" placeholder="Enter place">
-       <input type="submit">
+       <div>
+       <input type="text" name="place" placeholder="Enter place" class="searchbox" required>
+       <input type="submit" value="search">
+       </div>
    </form>
    {% else %}
-   <h1>Invalid Authorization!!</h1>
-   <a href="{% url 'login' %}">Login</a>
-   <a href="{% url 'register' %}">Register</a>
+   <div class="home">
+       <a href="{% url 'register' %}">Register</a>
+   <a href="{% url 'login' %}">Login</a><br>
+       <h3>Invalid Authorization!!</h3>
+   </div>
+
    {% endif %}
 
-<div>
+<div class="result">
  {% for store,rating in store_names.items %}
-    {{ store }}
-    {{ rating }}
+    <h3>  {{ store }}
+        {{ rating }}  </h3>
     <br>
     {% endfor %}
 </div>
 </body>
 </html>
+

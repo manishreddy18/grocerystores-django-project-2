@@ -1,20 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:500' rel='stylesheet' type='text/css'>
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
- <h1>This is Home Page</h1>
  <div>
      {% if user.is_authenticated %}
+     <div class="name">
      <h3>Hello, {{user.username}}</h3>
-     <a href="{% url 'search' %}">Search Grocery Stores</a>
-     <br>
+     </div>
+     <div class="logout-bt">
      <a href="{% url 'logout' %}">Log Out</a>
+     </div>
+     <div class="home">
+     <a href="{% url 'search' %}">Search Grocery Stores</a>
+     </div>
+
      {% else %}
-     <a href="{%url 'register'%}">Register</a>
+     <div class="home">
+     <a href="{%url 'register'%}">Register</a> <br>
      <a href="{% url 'login' %}">Log in</a>
+     </div>
      {% endif %}
  </div>
 </body>

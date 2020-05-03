@@ -1,22 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Register</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <form action=" " method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <input type="text" name="username" placeholder="User Name"><br>-->
+<!--        <input type="email" name="email" placeholder="Email">-->
+<!--        <input type="password" name="password" placeholder="Password"><br>-->
+<!--        <input type="password" name="password2" placeholder="Renter Password">-->
+<!--        <input type="submit" name="Submit">-->
+<!--    </form>-->
+<!--    <div>-->
+<!--        {% for message in messages%}-->
+<!--        <h3>{{message}}</h3>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu:500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
-    <form action=" " method="post">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="User Name"><br>
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password"><br>
-        <input type="password" name="password2" placeholder="Renter Password">
-        <input type="submit" name="Submit">
+<div class="login">
+  <div class="login-header">
+    <h1>SignUp</h1>
+  </div>
+    <form action="" method="post">
+        {% csrf_token%}
+  <div class="login-form">
+    <h3>Username:</h3>
+    <input type="text" placeholder="Username" , name="username" required/><br>
+      <h3>Email:</h3>
+    <input type="email" placeholder="Email" , name="email" required/><br>
+    <h3>Password:</h3>
+    <input type="password" placeholder="Password", name="password" required/>
+    <br>
+      <h3>Confirm PassWord:</h3>
+      <input type="password" placeholder="Confirm Password", name="password2" required/>
+      <br>
+    <input type="submit"/>
+    <br>
+  </div>
     </form>
-    <div>
+    <div class="message">
         {% for message in messages%}
         <h3>{{message}}</h3>
         {% endfor %}
     </div>
+   </div>
 </body>
+
 </html>
