@@ -1,6 +1,8 @@
-from django.shortcuts import render , redirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render , redirect, get_object_or_404
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
+from .models import StoresList
 import requests
 # Create your views here.
 
@@ -47,23 +49,41 @@ def login(request):
         return render(request, 'pinpic/login.html')
 
 def search(request):
+    data = None
     if request.method == 'POST':
             place = request.POST['place']
             api = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyCYKWCly8kboiPaTbMggQJoEgrwQzrDzKg&query=grocery+in+"
             url = api + place
-            req = requests.get(url).json()
-            store_names = {}
-
-            for i in range(len(req["results"])):
-                total = req["results"][i]["user_ratings_total"]
-                store_names[req["results"][i]["name"]] = req["results"][i]["rating"]
-
-            store_names = sorted(store_names.items(), key=lambda x: x[1], reverse=True)
-            return render(request, 'pinpic/searchbox.html', {'store_names': store_names})
+            if not StoresList.objects.filter(place=place).exists():
+                req = requests.get(url).json()
+                store_names = {}
+                for i in range(len(req["results"])):
+                    rating = req["results"][i]["rating"]
+                    data = StoresList.objects.create(name=req["results"][i]["name"], place=place, count=0, rating=rating)
+                    data.save()
+            store_names = StoresList.objects.filter(place=place).order_by('-rating')
+            return render(request, 'pinpic/storelist.html', {'store_names': store_names})
     else:
         return render(request, 'pinpic/searchbox.html')
 
+def mostvisited(request):
+    if request.method == 'POST':
+        place = request.POST['place']
+        stores = StoresList.objects.filter(place=place,count__gt=0).order_by('-count')[:3]
+        return render(request,'pinpic/mostvisited.html',{'store_names':stores})
 
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def display(request, pk):
+    data = get_object_or_404(StoresList, pk=pk)
+    # data = StoresList.objects.get(pk=pk)
+    data.count = data.count+1
+    data.save()
+    return redirect('search')
+def delete(request):
+    if request.method == 'POST':
+        place = request.POST['place']
+        StoresList.objects.filter(place=place).delete()
+    return redirect('search')

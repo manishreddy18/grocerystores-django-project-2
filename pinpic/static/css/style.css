@@ -119,3 +119,8 @@ text-align:center;
   font-size:300%;
   line-height:2em;
 }
+
+.list{
+ font-family: 'Ubuntu', sans-serif;
+ color:red;
+}

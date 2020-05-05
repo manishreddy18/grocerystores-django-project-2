@@ -1,0 +1,13 @@
+{% extends 'pinpic/searchbox.html' %}
+
+{% block content %}
+ {% for store in store_names %}
+    <div class="list">
+    <a href="{% url 'display' pk=store.pk %}">
+    <h3>{{store.name}} ({{store.rating}}) </h3>
+        <h5>Visits:{{store.count}} </h5>
+    </a>
+    <br>
+    </div>
+    {% endfor %}
+{%endblock%}

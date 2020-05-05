@@ -1,4 +1,4 @@
 from django.contrib import admin
+from .models import StoresList
 
-# Register your models here.
-
+admin.site.register(StoresList)
