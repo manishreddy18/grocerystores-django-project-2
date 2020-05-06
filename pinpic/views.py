@@ -48,14 +48,12 @@ def login(request):
         return render(request, 'pinpic/login.html')
 
 def search(request):
-    data = None
     if request.method == 'POST':
             place = request.POST['place']
             api = "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyCYKWCly8kboiPaTbMggQJoEgrwQzrDzKg&query=grocery+in+"
             url = api + place
             if not StoresList.objects.filter(place=place).exists():
                 req = requests.get(url).json()
-                store_names = {}
                 for i in range(len(req["results"])):
                     rating = req["results"][i]["rating"]
                     data = StoresList.objects.create(name=req["results"][i]["name"], place=place, count=0, rating=rating)
