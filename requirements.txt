@@ -9,7 +9,7 @@ filelock==3.0.12
 gunicorn==20.0.4
 idna==2.9
 MouseInfo==0.1.3
-Pillow==7.1.2
+Pillow==8.1.1
 pipenv==2018.11.26
 requests==2.23.0
 six==1.14.0
